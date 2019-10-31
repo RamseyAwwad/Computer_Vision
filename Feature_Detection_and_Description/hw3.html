@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>CS1674: Homework 3 </title>
+</head>
+<body>
+<h2>CS1674: Homework 3 </h2>
+<b>Due:</b> 10/2/2018, 11:59pm</b> 
+<br><br>
+
+This assignment is worth 50 points. 
+<br><br>
+
+In this problem, you will implement feature extraction using the Harris corner detector, as discussed in class. Use the following signature: <font face="courier new">function [x, y, scores, Ih, Iv] = extract_keypoints(image);</font>
+<br><br>
+Input:
+<br>
+<ul>
+<li><font face="courier new">image</font> is a color image of class <font face="courier new">uint8</font> which you should convert to grayscale and <font face="courier new">double</font> in your function. </li>
+</ul>
+Outputs:<br>
+<ul>
+<li>Each of <font face="courier new">x,y</font> is an <i>n</i>x1 vector that denotes the <i>x</i> and <i>y</i> locations, respectively, of each of the <i>n</i> detected keypoints, i.e. points that (1) have "cornerness" <font face="courier new">R</font> scores greater than a threshold, and (2) who survive the non-maximum suppression. Keep in mind that <i>x</i> denotes the horizontal direction, hence <i>columns</i> of the image, and <i>y</i> denotes the vertical direction, hence <i>rows</i>, counting from the top-left of the image. </li>
+<li><font face="courier new">scores</font> is an <i>n</i>x1 vector that contains the <font face="courier new">R</font> score for each detected keypoint. </li>
+<li><font face="courier new">Ih,Iv</font> are matrices with the same 
+number of rows and columns as your input image, and store the gradients 
+in the <i>x</i> (horizontal) and <i>y</i> (vertical) directions at each pixel. We'll use these outputs for the next assignment.</li>
+</ul>
+Instructions:
+<ol type="a">
+<li>[10 pts] Let's do some preprocessing. First, set some parameters for use in your functions, at the beginning of your function: set the value of <i>k</i> (from the "Harris Detector: Algorithm" slide) to 0.05, and use a window size of 5. Second, read in the image, and convert it to grayscale. Compute the horizontal image gradient <font face="courier new">Ih</font> and the vertical image gradient <font face="courier new">Iv</font>. Finally, initialize a matrix <font face="courier new">R</font> of the same size as the image that will store the "cornerness" scores for each pixel. </li>
+<li>[15 pts] Use a double loop to compute the cornerness score <font face="courier new">R(i, j)</font> at each pixel <font face="courier new">i, j</font>. This score depends on a 2x2 matrix <font face="courier new">M</font> computed for each pixel, as shown in the slides. This matrix relies on all neighbors of <font face="courier new">i, j</font> that are less than <font face="courier new">half_window_size</font> away from it. Thus, the matrix <font face="courier new">M</font> for a given pixel is a summation of <font face="courier new">window_size^2</font> matrices, each of size 2x2. Each of the 2x2 entries is the product of gradient image values at a particular pixel. After computing <font face="courier new">M</font>, use the formula from class to compute the <font face="courier new">R(i, j)</font> score for that pixel.</li>
+<li>[5 pts] After computing all <font face="courier new">R(i, j)</font> scores, it is time to threshold them in order to find which pixels correspond to keypoints. You can set the threshold for the "cornerness" score <i>R</i> however you like; for example, you can set it to 5 times the <i>average</i> <i>R</i> score. Alternatively, you can simply output the top <i>n</i> keypoints (e.g. top 1%).</li>
+<li>[10 pts] Perform non-maximum suppression by removing those keypoints whose <font face="courier new">R</font>
+ score is not larger than all of their 8 neighbors; if a keypoint does not 
+have 8 neighbors, remove it. The <font face="courier new">scores/x/y</font> that you output should correspond to the final set of keypoints, after non-max suppression. Tip: Don't remove indices while looping 
+over pixels; instead keep a vector of indices you want to remove,
+then set the keypoints at those indices to <font face="courier new">[]</font>.</li>
+<li>[10 pts] Show your detected keypoints on three images. For each image, display the image and visualize the keypoints you have detected on it, for example by drawing a circle for each keypoint. Use the <font face="courier new">scores</font> variable and make keypoints with higher scores correspond to larger circles, e.g. <font face="courier new">plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) / 1000000000);</font> (You don't have to divide by this value exactly.) Name your visualizations <font face="courier new">vis1.png, vis2.png, vis3.png</font>. <a href="cardinal1_keypoints.png">Here</a> is a sample of keypoints that you might get on an image of a cardinal.
+</li>
+</ol>
+
+<b>Submission:</b>
+<ul>
+<li><font face="courier new">extract_keypoints.m</font>
+<li><font face="courier new">vis1.png, vis2.png, vis3.png</font> </li>
+</ul>
+<br>
+
+</body>
+</html>
