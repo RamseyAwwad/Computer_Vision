@@ -1,6 +1,4 @@
 % Code written for CS1674 by Adriana Kovashka 
-% DO NOT SHARE as students in the next issue might need to implement this
-
 function [horizontalSeam] = find_optimal_horizontal_seam(M)
 
     [num_rows, num_cols] = size(M);
