@@ -1,0 +1,13 @@
+BOW ratio: 1.213425
+texture concat ratio: 0.700000
+texture mean ratio: 0.419761
+
+Within-class distance should be smaller than the between-class distance because the code can tell when two same-class images are the same.
+
+Texture mean ratio has the smallest within-class distance.
+
+I excepted bag of words to be lower. Not sure why it is that high.
+
+Again, I expected bag of words to be lower because I assumed that the two image classes would have similar word distributions.
+
+Texture mean ratio is very low so I would say that is the best descriptor here. 
