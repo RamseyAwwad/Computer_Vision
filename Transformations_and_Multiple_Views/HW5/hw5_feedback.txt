@@ -1,0 +1,3 @@
+Feedback for Homework 5:
+
+(-2) In general results of circle detection make sense but for some white pixels which there are not foreground, some circles have been detected.
