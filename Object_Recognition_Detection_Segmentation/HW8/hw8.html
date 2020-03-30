@@ -1,0 +1,161 @@
+<html>
+<head>
+<title>CS1674: Homework 8 </title>
+</head>
+<body>
+<h2>CS1674: Homework 8 </h2>
+<b>Due:</b> 11/27/2018, 11:59pm</b> 
+<br><br>
+
+This assignment is worth 60 points. 
+<br><br><br>
+
+<u>Part I: Network Activations</u> [15 points]
+<br><br>
+
+In this part, you will compute some network activations using a given input and fixed network weights. Use the following network diagram (similar to the one we saw in class, but without biases). 
+<br>
+<img src="nn_diagram.png">
+<br><br>
+The following are the input pixel values, and the weight values. 
+<table border=0 >
+<tr><td width=200>x<sub>1</sub> = 10</td> 	<td width=200>w<sup>(1)</sup><sub>31</sub> = 0.82</td></tr>
+<tr><td>x<sub>2</sub> = 1</td> 		<td>w<sup>(1)</sup><sub>32</sub> = 0.1</td></tr>
+<tr><td>x<sub>3</sub> = 2</td>		<td>w<sup>(1)</sup><sub>33</sub> = 0.35</td></tr>
+<tr><td>x<sub>4</sub> = 3</td>		<td>w<sup>(1)</sup><sub>34</sub> = 0.3</td></tr>
+<tr><td>w<sup>(1)</sup><sub>11</sub> = 0.5</td>		<td>w<sup>(2)</sup><sub>11</sub> = 0.7</td></tr>
+<tr><td>w<sup>(1)</sup><sub>12</sub> = 0.6</td>		<td>w<sup>(2)</sup><sub>12</sub> = 0.45</td></tr>
+<tr><td>w<sup>(1)</sup><sub>13</sub> = 0.4</td>		<td>w<sup>(2)</sup><sub>13</sub> = 0.5</td></tr>
+<tr><td>w<sup>(1)</sup><sub>14</sub> = 0.3</td>		<td>w<sup>(2)</sup><sub>21</sub> = 0.17</td></tr>
+<tr><td>w<sup>(1)</sup><sub>21</sub> = 0.02</td>	<td>w<sup>(2)</sup><sub>22</sub> = 0.9</td></tr>
+<tr><td>w<sup>(1)</sup><sub>22</sub> = 0.25</td>	<td>w<sup>(2)</sup><sub>23</sub> = 0.8</td></tr>
+<tr><td>w<sup>(1)</sup><sub>23</sub> = 0.4</td></tr>
+<tr><td>w<sup>(1)</sup><sub>24</sub> = 0.3</td></tr>
+</table>
+<br>
+
+In a script <font face="courier new">activations.m</font>:
+<ol type="1">
+<li>[5 pts] First, Encode all inputs and weights as matrices/vectors in Matlab. In our example, D=4, M=3, K=2.</li> <br>
+<li>[5 pts] Second, write code to compute and print the value of z<sub>2</sub>, if a <font face="courier new">tanh</font> activation is used. You can use Matlab's <font face="courier new">tanh</font> function. </li> <br>
+<li>[5 pts] Third, write code to compute and print the value of y<sub>1</sub>, if RELU activation is used at the hidden layer, and sigmoid activation is used at the output layer. Don't use the Matlab functions, instead use the formulas for these functions that were shown in class and implement them yourself. You don't have to implement the <font face="courier new">exp</font> function, just call it. </li> <br>
+</ol>
+
+
+
+<u>Part II: Loss Functions</u> [15 points]
+<br><br>
+In this part, you will compute two types of loss functions: hinge loss and cross-entropy loss. You will use three different sets of weights W, each of which will result in a different set of scores <i>s = W*x</i> for four data samples, where <i>x</i> is of size 25x1, <i>W</i> is of size 4x25, and <i>s</i> is of size 4x1. Based on the computed losses, you have to say which set of weights is better. The weights and samples are in <a href="weights_samples.mat">this file</a>. The first sample (x<sub>1</sub>) is of class 1, the second of class 2, the third of class 3, and the fourth of class 4. 
+<ol type="1">
+<li>[5 pts] Write a <font face="courier new">function [loss] = hinge_loss(scores, correct_class)</font> to compute the L<sub>i</sub> loss for an individual sample. 
+<br>
+Inputs: 
+<ul>
+<li><font face="courier new">scores</font> is a 4x1 set of predicted scores, one score for each class, for some sample, and</li>
+<li><font face="courier new">correct_class</font> is the correct class for that same sample.</li>
+</ul>
+Output:
+<ul>
+<li><font face="courier new">loss</font> is a scalar measuring the hinge loss, as defined in class, given these scores and ground truth class.</li>
+</ul> 
+</li> <br>
+
+<li>[5 pts] Write a <font face="courier new">function [loss] = cross_entropy_loss(scores, correct_class)</font> to compute the L<sub>i</sub> loss for an individual sample. The inputs are defined as above. The output is analogous, but computing cross-entropy loss rather than hinge loss.</li> <br>
+
+<li>[5 pts] Write a script <font face="courier new">losses.m</font> to compute and print each type of loss (hinge or cross-entropy) for each weight matrix. Then, in a file <font face="courier new">answers.txt</font>, say which weight matrix is the best one, (1) according to the hinge loss, and (2) according to the cross-entropy loss. </li> <br>
+
+
+</ol>
+
+
+<u>Part III: Gradients</u> [10 points] 
+<br><br>
+In this part, you will compute the numerical gradient for the first weight vector from the previous part, and a weight update. 
+<ol type="1">
+<li>[8 pts] Write a script <font face="courier new">gradient.m</font> to loop over the dimensions of the weight vector and numerically compute the derivative for each dimension. Then concatenate the derivatives together, and output the resulting vector as the gradient. Use the hinge loss to compute the loss for that weight vector over all examples. Use h=0.0001.</li> <br>
+<li>[2 pts] In the same script, also show the result of a weight update with learning rate of 0.001.</li>
+</ol>
+Tips: 
+<ul>
+<li>Make W<sub>1</sub> into a vector via <font face="courier new">W1(:)</font>. Use <font face="courier new">reshape</font> to reshape any intermediate <font face="courier new">W1_plus_h</font> (needed in the process of computing a derivative) back into a 4x25 matrix. </li>
+<li>Make sure to change each dimension of the weight vector one at a time, so store the original version of the weight vector before any changes were made to it, and reset the weight vector to that original each time you loop.</li>
+</ul>
+<br>
+
+
+
+<u>Part IV: ConvNet Operations</u> [20 pts]
+<br><br>
+
+In this part, you will compute the output from applying a single set of convolution, non-linearity, and pooling operations, on two small examples. Below are your image (with width = height = <i>N</i> = 9) and your filter (with width = height = <i>F</i> = 3). For simplicity, since convolution is correlation with a flipped filter, when we say "convolution" below, you should actually implement "correlation".
+<br><br>
+<img src="image_filter.png">
+<br>
+
+<ol type="1">
+<li>[7 pts] Write a <font face="courier new">function [Output] = my_conv(Image, Filter, Padding, Stride)</font> that computes the output of applying a filter over an image, with given padding and stride. You are not allowed to use any convolution-related Matlab functions except element-wise multiplication between two matrices, followed by summation. 
+<br>
+Inputs:
+<ul>
+<li><font face="courier new">Image</font> is a grayscale single-channel image, e.g. the one shown above (don't hard-code it in your function).</li>
+<li><font face="courier new">Filter</font> is a single-channel filter, e.g. the one shown above (don't hard-code it in your function).</li>
+<li><font face="courier new">Padding</font> is a scalar saying how much padding to apply above/below and to the left/right of the Image.</li>
+<li><font face="courier new">Stride</font> is a scalar saying what stride to use to advance over the Image during convolution.</li>
+</ul>
+Output:
+<ul>
+<li><font face="courier new">Output</font> is the single-channel matrix resulting from the convolution operation.</li>
+</ul>
+</li>
+<br>
+<li>[7 pts] Write a <font face="courier new">function [Output] = my_pool(Input, Pool_Size)</font> that computes the output of max-pooling over <i>Pool_Size</i>x<i>Pool_Size</i> regions of the input. Again, you are not allowed to use built-in Matlab functions that compute pooling.
+<br>
+Inputs:
+<ul>
+<li><font face="courier new">Input</font> is a square matrix, which you should assume to be the result from applying RELU on the output from convolution.</li>
+<li><font face="courier new">Pool_Size</font> is a scalar saying over what regions to compute max.</li>
+</ul>
+Output:
+<ul>
+<li><font face="courier new">Output</font> is the single-channel matrix resulting from the max-pooling operation.</li>
+</ul>
+</li>
+<br>
+<li>A script <font face="courier new"><a href="test_cnn_ops.m">test_cnn_ops.m</a></font> is provided to test your two functions in two scenarios. When you run it, it will call your functions (conv -> relu -> pool) and save the output variables <font face="courier new">output1, output2</font> in a file <font face="courier new">outputs.mat</font>. Run this script and submit the saved output file. The tests in the script are as follows:
+<ol type="a">
+<li>[3 pts] Test 1:
+<ul>
+<li>First, apply convolution using no padding, and a stride of 2 (in both the horizontal and vertical directions).</li>
+<li>Second, apply a Rectified Linear Unit (ReLU) activation on the previous output.</li>
+<li>Third, apply max pooling over 2x2 regions on the previous output.</li>
+</ul>
+</li>
+<li>[3 pts] Test 2:
+<ul>
+<li>First, apply convolution using padding 1, and a stride of 4.</li>
+<li>Second, apply a Rectified Linear Unit (ReLU) activation on the previous output.</li>
+<li>Third, apply max pooling over 3x3 regions on the previous output.</li>
+</ul>
+</li>
+</ol>
+</ol>
+<br>
+
+
+
+<b>Submission:</b>
+<ul>
+<li><font face="courier new">activations.m </font> </li>
+<li><font face="courier new">hinge_loss.m</font> </li>
+<li><font face="courier new">cross_entropy_loss.m</font> </li>
+<li><font face="courier new">losses.m</font> </li>
+<li><font face="courier new">answers.txt</font> </li>
+<li><font face="courier new">gradient.m</font> </li>
+<li><font face="courier new">my_conv.m</font> </li>
+<li><font face="courier new">my_pool.m</font> </li>
+<li><font face="courier new">outputs.mat</font> </li>
+</ul>
+<br>
+
+</body>
+</html>

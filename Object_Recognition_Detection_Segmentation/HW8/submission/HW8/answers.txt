@@ -1,0 +1,5 @@
+Part II:
+
+Weight matrix 2 was the best one because it was the least lossy for both the hinge_loss and cross_entropy_loss functions.
+
+

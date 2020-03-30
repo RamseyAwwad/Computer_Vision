@@ -1,0 +1,5 @@
+Feedback for Homeowrk 8:
+
+(-10) part 1: activations.m script does not run and code is incomplete.
+
+(-8) Part 4: result of output1 and output2 is wrong. 
